@@ -1,0 +1,12 @@
+#build output
+bin/
+obj/
+
+#VS code
+.vscode/
+
+#macOS
+.DS_Store
+
+#Rider
+.idea/

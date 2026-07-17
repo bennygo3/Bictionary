@@ -1,0 +1,77 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Bictionary.MainWindow"
+        Title="Bictionary">
+    
+    <StackPanel Margin="20" Spacing="12">
+
+        <TextBlock
+            FontSize="28"
+            FontWeight="Bold"
+            Text="Bictionary"
+        />
+
+        <TextBlock
+            FontWeight="SemiBold"
+            Text="Search:"
+        />
+        
+
+        <TextBox
+            PlaceholderText="Search for a word..."
+        />
+
+        <Button
+            HorizontalAlignment="Center"
+            Width="150"
+            Content="Search" 
+        />
+
+        <Separator />
+
+        <TextBlock
+            FontSize="24"
+            FontWeight="Bold"
+            Text="Word"
+        />
+
+        <TextBlock
+            FontStyle="Italic"
+            Text="Search for a word to begin."
+        />
+
+        <Separator />
+
+        <TextBlock
+            FontWeight="Bold"
+            Text="Part of Speech:"
+        />
+
+        <TextBlock
+            Text="-"
+        />
+
+        <TextBlock
+            FontWeight="Bold"
+            Text="Definition:"
+        />
+
+        <TextBlock
+            Text="-"
+        />
+
+        <TextBlock
+            FontWeight="Bold"
+            Text="Example:"
+        />
+
+        <TextBlock
+            Text="-"
+        />
+
+    </StackPanel>
+
+</Window>
