@@ -21,13 +21,16 @@
         
 
         <TextBox
+            x:Name="MainSearchBox"
             PlaceholderText="Search for a word..."
         />
 
         <Button
+            x:Name="MainSearchButton"
+            Content="Search" 
+            Click="MainSearchButton_Click"
             HorizontalAlignment="Center"
             Width="150"
-            Content="Search" 
         />
 
         <Separator />
@@ -39,6 +42,7 @@
         />
 
         <TextBlock
+            x:Name="DefinitionTextBlock"
             FontStyle="Italic"
             Text="Search for a word to begin."
         />

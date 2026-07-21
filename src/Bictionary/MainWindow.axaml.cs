@@ -8,4 +8,9 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    private void MainSearchButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        DefinitionTextBlock.Text = MainSearchBox.Text;
+    }
 }
