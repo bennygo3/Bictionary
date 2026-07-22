@@ -11,15 +11,22 @@ public partial class MainWindow : Window
 
     private void MainSearchButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
+        if (!IsSearchValidInput())
+            return;
+
         DefinitionTextBlock.Text = MainSearchBox.Text;
 
-        if (MainSearchBox.Text.Length == 0)
+    }
+
+    private bool IsSearchValidInput()
+    {
+        if (string.IsNullOrWhiteSpace(MainSearchBox.Text))
         {
-            DefinitionTextBlock.Text = "Please enter a word to search";
-        } else
-        {
-            DefinitionTextBlock.Text = MainSearchBox.Text;
+            DefinitionTextBlock.Text = "Please enter a word to search.";
+
+            return false;
         }
-        
+
+        return true;
     }
 }
