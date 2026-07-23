@@ -1,9 +1,17 @@
 using Avalonia.Controls;
+using Bictionary.Models;
 
 namespace Bictionary;
 
 public partial class MainWindow : Window
 {
+    private readonly Word apple = new()
+    {
+        Text = "apple",
+        PartOfSpeech = "noun",
+        Definition = "A round fruit with red, green, or yellow skin.",
+        Example = "I ate an apple with lunch."
+    };
     public MainWindow()
     {
         InitializeComponent();
@@ -11,22 +19,37 @@ public partial class MainWindow : Window
 
     private void MainSearchButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (!IsSearchValidInput())
+        if (!IsSearchInputValid(MainSearchBox.Text))
             return;
 
-        DefinitionTextBlock.Text = MainSearchBox.Text;
+        DisplayWord(apple);
+        // SearchStatusTextBlock.Text = "";
+        // WordTextBlock.Text = MainSearchBox.Text;
 
     }
 
-    private bool IsSearchValidInput()
+    private bool IsSearchInputValid(string? text)
     {
-        if (string.IsNullOrWhiteSpace(MainSearchBox.Text))
+        if (string.IsNullOrWhiteSpace(text))
         {
-            DefinitionTextBlock.Text = "Please enter a word to search.";
+            SearchStatusTextBlock.Text = "Please enter a word to search.";
 
             return false;
         }
 
         return true;
+    }
+
+    private void DisplayWord(Word word)
+    {
+        SearchStatusTextBlock.Text = "";
+
+        WordTextBlock.Text = word.Text;
+
+        PartOfSpeechTextBlock.Text = word.PartOfSpeech;
+
+        DefinitionTextBlock.Text = word.Definition;
+
+        ExampleTextBlock.Text = word.Example;
     }
 }
