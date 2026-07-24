@@ -1,64 +1,60 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+// using System;
+// using System.Collections.Generic;
+// using System.Linq;
+using System.Threading.Tasks;
 using Bictionary.Models;
+using Npgsql;
 
 namespace Bictionary.Data;
 
 public class WordRepo
 {
-    private readonly List<Word> words =
-    [
-        new()
-        {
-            Text = "apple",
-            PartOfSpeech = "noun",
-            Definition = "A round fruit with red, green, or yellow skin.",
-            Example = "I ate an apple with lunch."
-        },
+    private readonly NpgsqlDataSource dataSource;
 
-        new()
+    public WordRepo()
         {
-            Text = "algorithm",
-            PartOfSpeech = "noun",
-            Definition = "A sequence of instructions used to solve a problem",
-            Example = "Binary search is an efficient algorithm."
-        },
+        string connectionString =
+            "Host=localhost;Username=benj.a.gomez;Database=bictionary";
 
-        new()
-        {
-            Text = "computer",
-            PartOfSpeech = "noun",
-            Definition = "An electronic device that processes data.",
-            Example = "I use my computer every day."
-        },
+        dataSource = NpgsqlDataSource.Create(connectionString);
+    }
 
-        new()
-        {
-            Text = "dictionary",
-            PartOfSpeech = "noun",
-            Definition = "A reference source containing words and their meanings.",
-            Example = "She looked up the word in the dictionary."
-        },
+    public async Task<Word?> FindWordAsync(string searchText)
+    {
+        const string sql = """ 
+            SELECT 
+                id,
+                text,
+                part_of_speech,
+                definition,
+                example
+            FROM words
+            WHERE LOWER(text) = LOWER(@searchText)
+            LIMIT 1;
+            """;
+        
+        await using NpgsqlCommand command =
+            dataSource.CreateCommand(sql);
 
-        new()
+        command.Parameters.AddWithValue("searchText", searchText);
+
+        await using NpgsqlDataReader reader =
+            await command.ExecuteReaderAsync();
+
+        if (!await reader.ReadAsync())
         {
-            Text = "dog",
-            PartOfSpeech = "noun",
-            Definition = "A domesticated mammal commonly kept as a pet.",
-            Example = "The dog wagged its tail."
+            return null;
         }
 
-    ];
-
-    public Word? FindWord(string searchText)
-    {
-        return words.FirstOrDefault(word =>
-            string.Equals(
-                word.Text,
-                searchText,
-                StringComparison.OrdinalIgnoreCase
-            )
-        );
+        return new Word
+        {
+            Id = reader.GetInt32(0),
+            Text = reader.GetString(1),
+            PartOfSpeech = reader.GetString(2),
+            Definition = reader.GetString(3),
+            Example = reader.IsDBNull(4)
+                ? ""
+                : reader.GetString(4)
+        };
     }
 }

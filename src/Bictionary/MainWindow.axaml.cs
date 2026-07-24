@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Bictionary.Data;
 using Bictionary.Models;
@@ -14,9 +15,9 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void MainSearchButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private async void MainSearchButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        SearchForWord();
+        await SearchForWordAsync();
     }
 
     private bool IsSearchInputValid(string? text)
@@ -54,22 +55,23 @@ public partial class MainWindow : Window
         ExampleTextBlock.Text = "-";
     }
 
-    private void MainSearchBox_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+    private async void MainSearchBox_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
         if (e.Key == Avalonia.Input.Key.Enter)
         {
-            SearchForWord();
+           await SearchForWordAsync();
         }
     }
 
-    private void SearchForWord()
+    // private void SearchForWord()
+    private async Task SearchForWordAsync()
     {
         string searchText = MainSearchBox.Text?.Trim() ?? "";
 
         if (!IsSearchInputValid(searchText))
             return;
 
-        Word? matchingWord = wordRepo.FindWord(searchText);
+        Word? matchingWord = await wordRepo.FindWordAsync(searchText);
 
         if (matchingWord is null)
         {
