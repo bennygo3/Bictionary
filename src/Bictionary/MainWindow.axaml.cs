@@ -1,17 +1,14 @@
 using Avalonia.Controls;
+using Bictionary.Data;
 using Bictionary.Models;
 
 namespace Bictionary;
 
 public partial class MainWindow : Window
 {
-    private readonly Word apple = new()
-    {
-        Text = "apple",
-        PartOfSpeech = "noun",
-        Definition = "A round fruit with red, green, or yellow skin.",
-        Example = "I ate an apple with lunch."
-    };
+
+    private readonly WordRepo wordRepo = new();
+
     public MainWindow()
     {
         InitializeComponent();
@@ -19,13 +16,7 @@ public partial class MainWindow : Window
 
     private void MainSearchButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (!IsSearchInputValid(MainSearchBox.Text))
-            return;
-
-        DisplayWord(apple);
-        // SearchStatusTextBlock.Text = "";
-        // WordTextBlock.Text = MainSearchBox.Text;
-
+        SearchForWord();
     }
 
     private bool IsSearchInputValid(string? text)
@@ -52,4 +43,41 @@ public partial class MainWindow : Window
 
         ExampleTextBlock.Text = word.Example;
     }
+
+    private void DisplayWordNotFound(string searchText)
+    {
+        SearchStatusTextBlock.Text = "No definition found.";
+
+        WordTextBlock.Text = searchText;
+        PartOfSpeechTextBlock.Text = "-";
+        DefinitionTextBlock.Text = "-";
+        ExampleTextBlock.Text = "-";
+    }
+
+    private void MainSearchBox_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+    {
+        if (e.Key == Avalonia.Input.Key.Enter)
+        {
+            SearchForWord();
+        }
+    }
+
+    private void SearchForWord()
+    {
+        string searchText = MainSearchBox.Text?.Trim() ?? "";
+
+        if (!IsSearchInputValid(searchText))
+            return;
+
+        Word? matchingWord = wordRepo.FindWord(searchText);
+
+        if (matchingWord is null)
+        {
+            DisplayWordNotFound(searchText);
+            return;
+        }
+
+        DisplayWord(matchingWord);
+    }
+
 }

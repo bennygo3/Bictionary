@@ -23,6 +23,7 @@
         <TextBox
             x:Name="MainSearchBox"
             PlaceholderText="Search for a word..."
+            KeyDown="MainSearchBox_KeyDown"
         />
 
         <Button
