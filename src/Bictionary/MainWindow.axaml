@@ -34,6 +34,14 @@
             Width="150"
         />
 
+        <Button
+            x:Name="OpenEditorButton"
+            Content="Dictionary Editor" 
+            Click="OpenEditorButton_Click"
+            HorizontalAlignment="Center"
+            Width="150"
+        />
+
         <Separator />
 
         <TextBlock

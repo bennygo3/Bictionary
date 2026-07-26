@@ -9,7 +9,6 @@ public partial class MainWindow : Window
 {
 
     private readonly WordRepo wordRepo = new();
-
     public MainWindow()
     {
         InitializeComponent();
@@ -18,6 +17,13 @@ public partial class MainWindow : Window
     private async void MainSearchButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         await SearchForWordAsync();
+    }
+
+    private void OpenEditorButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        DictionaryEditorWindow editorWindow = new();
+
+        editorWindow.Show();
     }
 
     private bool IsSearchInputValid(string? text)
@@ -42,7 +48,7 @@ public partial class MainWindow : Window
 
         DefinitionTextBlock.Text = word.Definition;
 
-        ExampleTextBlock.Text = word.Example;
+        ExampleTextBlock.Text = word.Example ?? "-";
     }
 
     private void DisplayWordNotFound(string searchText)

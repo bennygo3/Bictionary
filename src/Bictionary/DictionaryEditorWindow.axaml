@@ -1,0 +1,119 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="700"
+        d:DesignHeight="650"
+        x:Class="Bictionary.DictionaryEditorWindow"
+        Title="Bictionary Dictionary Editor"
+        Width="700"
+        Height="650">
+    
+    <ScrollViewer>
+        <StackPanel Margin="24" Spacing="12">
+
+            <TextBlock
+                FontSize="28"
+                FontWeight="Bold"
+                Text="Dictionary Editor"
+            />
+
+            <TextBlock
+                Text="Add entries to the Bictionary master dictionary"
+            />
+
+            <Separator />
+
+            <TextBlock
+                FontWeight="SemiBold"
+                Text="Word"
+            />
+
+            <TextBox
+                x:Name="WordInput"
+                PlaceholderText="Enter a word..."
+            />
+
+            <TextBlock
+                FontWeight="SemiBold"
+                Text="Part of Speech"
+            />
+
+            <TextBox
+                x:Name="PartOfSpeechInput"
+                PlaceholderText="noun, verb,adjective..."
+            />
+
+            <TextBlock
+                FontWeight="SemiBold"
+                Text="Definition"
+            />
+
+            <TextBox
+                x:Name="DefinitionInput"
+                PlaceholderText="Enter the word's definition:"
+                AcceptsReturn="True"
+                TextWrapping="Wrap"
+                MinHeight="120"
+            />
+
+            <TextBlock
+                FontWeight="SemiBold"
+                Text="Example (optional)"
+            />
+
+            <TextBox
+                x:Name="ExampleInput"
+                PlaceholderText="Enter an example sentence..."
+                AcceptsReturn="True"
+                TextWrapping="Wrap"
+                MinHeight="80"
+            />
+
+            <Button
+                x:Name="SaveWordButton"
+                Content="Save Word"
+                HorizontalAlignment="Center"
+                Width="160"
+            />
+
+            <TextBlock
+                x:Name="EditorStatusTextBlock"
+                HorizontalAlignment="Center"
+                FontStyle="Italic"
+                Text=""
+            />
+
+            <Separator />
+
+            <TextBlock 
+                FontSize="20"
+                FontWeight="Bold"
+                Text="Progress"
+            />
+
+            <TextBlock 
+                x:Name="WordCountTextBlock"
+                Text="Total words: -"
+            />
+
+            <TextBlock 
+                x:Name="LastWordTextBlock"
+                Text="Last word added: -"
+            />
+
+            <TextBlock 
+                FontWeight="SemiBold"
+                Text="Recent entries"
+            />
+
+            <ListBox
+                x:Name="RecentWordsListBox"
+                MinHeight="150"
+            />
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Window>
