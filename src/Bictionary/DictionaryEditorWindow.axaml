@@ -74,6 +74,7 @@
             <Button
                 x:Name="SaveWordButton"
                 Content="Save Word"
+                Click="SaveWordButton_Click"
                 HorizontalAlignment="Center"
                 Width="160"
             />
