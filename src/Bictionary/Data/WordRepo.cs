@@ -97,6 +97,63 @@ public class WordRepo
         return word;
     }
 
+    public async Task<Word> UpdateWordAsync(Word word)
+    {
+        const string sql = """
+            UPDATE words
+            SET
+                text = @text,
+                part_of_speech = @partOfSpeech,
+                definition = @definition,
+                example = @example,
+                updated_at = NOW()
+            WHERE id = @id
+            RETURNING id;
+            """;
+        
+        await using NpgsqlCommand command =
+            dataSource.CreateCommand(sql);
+        
+        command.Parameters.AddWithValue(
+            "id",
+            word.Id
+        );
+
+        command.Parameters.AddWithValue(
+            "text",
+            word.Text
+        );
+
+        command.Parameters.AddWithValue(
+            "partOfSpeech",
+            word.PartOfSpeech
+        );
+
+        command.Parameters.AddWithValue(
+            "definition",
+            word.Definition
+        );
+
+        command.Parameters.AddWithValue(
+            "example",
+            NpgsqlTypes.NpgsqlDbType.Text,
+            (object?)word.Example ?? DBNull.Value
+        );
+
+        object? result = await command.ExecuteScalarAsync();
+
+        if (result is not int updatedId)
+        {
+            throw new InvalidOperationException(
+                "The entry was not updated."
+            );
+        }
+
+        word.Id = updatedId;
+
+        return word;
+    }
+
     public async Task<List<Word>> GetRecentWordsAsync(
         int limit = 10
     )

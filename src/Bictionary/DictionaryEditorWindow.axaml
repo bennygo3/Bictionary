@@ -9,7 +9,7 @@
         Title="Bictionary Dictionary Editor"
         Width="700"
         Height="650">
-    
+
     <ScrollViewer>
         <StackPanel Margin="24" Spacing="12">
 
@@ -71,50 +71,74 @@
                 MinHeight="80"
             />
 
-            <Button
-                x:Name="SaveWordButton"
-                Content="Save Word"
-                Click="SaveWordButton_Click"
+            <StackPanel
+                Orientation="Horizontal"
                 HorizontalAlignment="Center"
-                Width="160"
-            />
+                Spacing="10"
+                >
 
-            <TextBlock
-                x:Name="EditorStatusTextBlock"
-                HorizontalAlignment="Center"
-                FontStyle="Italic"
-                Text=""
-            />
+                <Button
+                    x:Name="SaveWordButton"
+                    Content="Save Word"
+                    Click="SaveWordButton_Click"
+                    Width="160"
+                />
 
-            <Separator />
+                <Button
+                    x:Name="CancelEditButton"
+                    Content="Cancel Edit"
+                    Click="CancelEditButton_Click"
+                    Width="130"
+                    IsVisible="False"
+                />
 
-            <TextBlock 
-                FontSize="20"
-                FontWeight="Bold"
-                Text="Progress"
-            />
+            </StackPanel>
 
-            <TextBlock 
-                x:Name="WordCountTextBlock"
-                Text="Total words: -"
-            />
+        <!-- <Button
+        x:Name="SaveWordButton"
+        Content="Save Word"
+        Click="SaveWordButton_Click"
+        HorizontalAlignment="Center"
+        Width="160"
+        /> -->
 
-            <TextBlock 
-                x:Name="LastWordTextBlock"
-                Text="Last word added: -"
-            />
+        <TextBlock
+            x:Name="EditorStatusTextBlock"
+            HorizontalAlignment="Center"
+            FontStyle="Italic"
+            Text=""
+        />
 
-            <TextBlock 
-                FontWeight="SemiBold"
-                Text="Recent entries"
-            />
+        <Separator />
 
-            <ListBox
-                x:Name="RecentWordsListBox"
-                MinHeight="150"
-            />
+        <TextBlock
+            FontSize="20"
+            FontWeight="Bold"
+            Text="Progress"
+        />
 
-        </StackPanel>
-    </ScrollViewer>
+        <TextBlock
+            x:Name="WordCountTextBlock"
+            Text="Total words: -"
+        />
+
+        <TextBlock
+            x:Name="LastWordTextBlock"
+            Text="Last word added: -"
+        />
+
+        <TextBlock
+            FontWeight="SemiBold"
+            Text="Recent entries"
+        />
+
+        <ListBox
+            x:Name="RecentWordsListBox"
+            MinHeight="150"
+            SelectionChanged="RecentWordsListBox_SelectionChanged"
+        />
+
+    </StackPanel>
+</ScrollViewer>
 
 </Window>
