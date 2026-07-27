@@ -40,6 +40,19 @@
                 Text="Syllabification"
             />
 
+            <StackPanel
+                Orientation="Horizontal"
+                Spacing="5">
+            
+                <Button
+                    Content="·"
+                    Click="InsertSyllableSeparator_Click"
+                    Tag="·"
+                    Focusable="False"
+                />
+
+            </StackPanel>
+
             <TextBox
                 x:Name="SyllabificationInput"
                 PlaceholderText="Example: dic·tion·ar·y"
@@ -49,6 +62,75 @@
                 FontWeight="SemiBold"
                 Text="Pronunciation"
             />
+
+            <StackPanel
+                Orientation="Horizontal"
+                Spacing="5">
+            
+                <Button
+                    Content="ə"
+                    Click="InsertPronunciationCharacter_Click"
+                    Tag="ə"
+                    Focusable="False"
+                />
+
+                <Button
+                    Content="ɪ"
+                    Click="InsertPronunciationCharacter_Click"
+                    Tag="ɪ"
+                    Focusable="False"
+                />
+
+                <Button
+                    Content="æ"
+                    Click="InsertPronunciationCharacter_Click"
+                    Tag="æ"
+                    Focusable="False"
+                />
+
+                <Button
+                    Content="ʃ"
+                    Click="InsertPronunciationCharacter_Click"
+                    Tag="ʃ"
+                    Focusable="False"
+                />
+
+                <Button
+                    Content="θ"
+                    Click="InsertPronunciationCharacter_Click"
+                    Tag="θ"
+                    Focusable="False"
+                />
+
+                <Button
+                    Content="ð"
+                    Click="InsertPronunciationCharacter_Click"
+                    Tag="ð"
+                    Focusable="False"
+                />
+
+                <Button
+                    Content="ŋ"
+                    Click="InsertPronunciationCharacter_Click"
+                    Tag="ŋ"
+                    Focusable="False"
+                />
+
+                <Button
+                    Content="ˈ"
+                    Click="InsertPronunciationCharacter_Click"
+                    Tag="ˈ"
+                    Focusable="False"
+                />
+
+                <Button
+                    Content="·"
+                    Click="InsertPronunciationCharacter_Click"
+                    Tag="·"
+                    Focusable="False"
+                />
+            
+            </StackPanel>
 
             <TextBox
                 x:Name="PronunciationInput"

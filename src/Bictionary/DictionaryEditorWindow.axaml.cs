@@ -170,7 +170,7 @@ public partial class DictionaryEditorWindow : Window
 
         if (recentWords.Count == 0)
         {
-            LastWordTextBlock.Text = 
+            LastWordTextBlock.Text =
                 "Last word added: -";
 
             RecentWordsListBox.ItemsSource =
@@ -180,7 +180,7 @@ public partial class DictionaryEditorWindow : Window
         }
 
         LastWordTextBlock.Text = $"Last word added: {recentWords[0].Text}";
-        
+
         List<string> recentWordNames = [];
 
         foreach (Word word in recentWords)
@@ -342,5 +342,49 @@ public partial class DictionaryEditorWindow : Window
 
         return normalText;
     }
+
+    private void InsertSyllableSeparator_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        InsertTextIntoBox(
+            SyllabificationInput,
+            "·"
+        );
+    }
+
+    private void InsertPronunciationCharacter_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (sender is not Button button)
+        {
+            return;
+        }
+
+        if (button.Tag is not string character)
+        {
+            return;
+        }
+
+        InsertTextIntoBox(
+            PronunciationInput,
+            character
+        );
+    }
+
+    private static void InsertTextIntoBox(TextBox textBox, string text)
+    {
+        int cursorPosition = textBox.CaretIndex;
+
+        string currentText = textBox.Text ?? "";
+
+        textBox.Text = 
+            currentText.Insert(
+                cursorPosition,
+                text
+            );
+
+        textBox.CaretIndex = cursorPosition + text.Length;
+
+        textBox.Focus();
+    }
+
 }
 
