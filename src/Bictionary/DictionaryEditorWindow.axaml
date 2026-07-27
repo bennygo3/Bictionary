@@ -37,6 +37,27 @@
 
             <TextBlock
                 FontWeight="SemiBold"
+                Text="Syllabification"
+            />
+
+            <TextBox
+                x:Name="SyllabificationInput"
+                PlaceholderText="Example: dic·tion·ar·y"
+            />
+
+            <TextBlock
+                FontWeight="SemiBold"
+                Text="Pronunciation"
+            />
+
+            <TextBox
+                x:Name="PronunciationInput"
+                PlaceholderText="Example: /'dɪkʃəˌnɛri/"
+            />
+
+
+            <TextBlock
+                FontWeight="SemiBold"
                 Text="Part of Speech"
             />
 
@@ -153,14 +174,6 @@
                 />
 
             </StackPanel>
-
-        <!-- <Button
-        x:Name="SaveWordButton"
-        Content="Save Word"
-        Click="SaveWordButton_Click"
-        HorizontalAlignment="Center"
-        Width="160"
-        /> -->
 
         <TextBlock
             x:Name="EditorStatusTextBlock"

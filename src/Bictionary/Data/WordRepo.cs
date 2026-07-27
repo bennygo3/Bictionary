@@ -24,6 +24,8 @@ public class WordRepo
             SELECT 
                 id,
                 text,
+                syllabification,
+                pronunciation,
                 part_of_speech,
                 definition,
                 example
@@ -49,11 +51,17 @@ public class WordRepo
         {
             Id = reader.GetInt32(0),
             Text = reader.GetString(1),
-            PartOfSpeech = reader.GetString(2),
-            Definition = reader.GetString(3),
-            Example = reader.IsDBNull(4)
+            Syllabification = reader.IsDBNull(2)
                 ? null
-                : reader.GetString(4)
+                : reader.GetString(2),
+            Pronunciation = reader.IsDBNull(3)
+                ? null
+                : reader.GetString(3),
+            PartOfSpeech = reader.GetString(4),
+            Definition = reader.GetString(5),
+            Example = reader.IsDBNull(6)
+                ? null
+                : reader.GetString(6)
         };
     }
 
@@ -62,12 +70,16 @@ public class WordRepo
         const string sql ="""
             INSERT INTO words (
                 text,
+                syllabification,
+                pronunciation,
                 part_of_speech,
                 definition,
                 example
             )
             VALUES (
                 @text,
+                @syllabification,
+                @pronunciation,
                 @partOfSpeech,
                 @definition,
                 @example
@@ -79,6 +91,8 @@ public class WordRepo
             dataSource.CreateCommand(sql);
 
         command.Parameters.AddWithValue("text", word.Text);
+        command.Parameters.AddWithValue("syllabification", (object?)word.Syllabification ?? DBNull.Value);
+        command.Parameters.AddWithValue("pronunciation", (object?)word.Pronunciation ?? DBNull.Value);
         command.Parameters.AddWithValue("partOfSpeech", word.PartOfSpeech);
         command.Parameters.AddWithValue("definition", word.Definition);
         command.Parameters.AddWithValue("example", NpgsqlTypes.NpgsqlDbType.Text, (object?)word.Example ?? DBNull.Value);
@@ -103,6 +117,8 @@ public class WordRepo
             UPDATE words
             SET
                 text = @text,
+                syllabification = @syllabification,
+                pronunciation = @pronunciation,
                 part_of_speech = @partOfSpeech,
                 definition = @definition,
                 example = @example,
@@ -122,6 +138,16 @@ public class WordRepo
         command.Parameters.AddWithValue(
             "text",
             word.Text
+        );
+
+        command.Parameters.AddWithValue(
+            "syllabification",
+            (object?)word.Syllabification ?? DBNull.Value
+        );
+
+        command.Parameters.AddWithValue(
+            "pronunciation",
+            (object?)word.Pronunciation ?? DBNull.Value
         );
 
         command.Parameters.AddWithValue(
@@ -162,6 +188,8 @@ public class WordRepo
             SELECT 
                 id,
                 text,
+                syllabification,
+                pronunciation,
                 part_of_speech,
                 definition,
                 example
@@ -186,11 +214,17 @@ public class WordRepo
             {
                 Id = reader.GetInt32(0),
                 Text = reader.GetString(1),
-                PartOfSpeech = reader.GetString(2),
-                Definition = reader.GetString(3),
-                Example = reader.IsDBNull(4)
+                Syllabification = reader.IsDBNull(2)
                     ? null
-                    : reader.GetString(4)
+                    : reader.GetString(2),
+                Pronunciation = reader.IsDBNull(3)
+                    ? null
+                    : reader.GetString(3),
+                PartOfSpeech = reader.GetString(4),
+                Definition = reader.GetString(5),
+                Example = reader.IsDBNull(6)
+                    ? null
+                    : reader.GetString(6)
             };
 
             recentWords.Add(word);

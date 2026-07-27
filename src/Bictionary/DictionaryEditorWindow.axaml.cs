@@ -35,6 +35,8 @@ public partial class DictionaryEditorWindow : Window
     private async void SaveWordButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         string wordText = WordInput.Text?.Trim() ?? "";
+        string? syllabification = GetOptionalText(SyllabificationInput.Text);
+        string? pronunciation = GetOptionalText(PronunciationInput.Text);
         string partOfSpeech = PartOfSpeechInput.Text?.Trim() ?? "";
         string definition = DefinitionInput.Text?.Trim() ?? "";
         string? example = GetOptionalText(ExampleInput.Text);
@@ -52,6 +54,8 @@ public partial class DictionaryEditorWindow : Window
         {
             Id = wordBeingEdited?.Id ?? 0,
             Text = wordText,
+            Syllabification = syllabification,
+            Pronunciation = pronunciation,
             PartOfSpeech = partOfSpeech,
             Definition = definition,
             Example = example
@@ -147,7 +151,9 @@ public partial class DictionaryEditorWindow : Window
 
     private void ClearEntryForm()
     {
-        WordInput.Text ="";
+        WordInput.Text = "";
+        SyllabificationInput.Text = "";
+        PronunciationInput.Text = "";
         PartOfSpeechInput.Text = "";
         DefinitionInput.Text = "";
         ExampleInput.Text = "";
@@ -162,7 +168,7 @@ public partial class DictionaryEditorWindow : Window
         WordCountTextBlock.Text =
             $"Total words: {wordCount}";
 
-            if (recentWords.Count == 0)
+        if (recentWords.Count == 0)
         {
             LastWordTextBlock.Text = 
                 "Last word added: -";
@@ -206,6 +212,8 @@ public partial class DictionaryEditorWindow : Window
         wordBeingEdited = word;
 
         WordInput.Text = word.Text;
+        SyllabificationInput.Text = word.Syllabification ?? "";
+        PronunciationInput.Text = word.Pronunciation ?? "";
         PartOfSpeechInput.Text = word.PartOfSpeech;
         DefinitionInput.Text = word.Definition;
         ExampleInput.Text = word.Example ?? "";
@@ -266,7 +274,7 @@ public partial class DictionaryEditorWindow : Window
     {
         if (activeFormattingInput is null)
         {
-            EditorStatusTextBlock.Text = "Click inisde the definition or example to edit.";
+            EditorStatusTextBlock.Text = "Click inside the definition or example to edit.";
 
             return;
         }
@@ -281,10 +289,7 @@ public partial class DictionaryEditorWindow : Window
 
         int end = Math.Max(selectionStart, selectionEnd);
 
-        string selectedText = currentText.Substring(
-            start,
-            end - start
-        );
+        string selectedText = currentText[start..end];
 
         string formattedText = openingMarker + selectedText + closingMarker;
 
@@ -301,7 +306,7 @@ public partial class DictionaryEditorWindow : Window
     {
         if (activeFormattingInput is null)
         {
-            EditorStatusTextBlock.Text = "Click inisde the definition or example to edit.";
+            EditorStatusTextBlock.Text = "Click inside the definition or example to edit.";
 
             return;
         }
@@ -316,10 +321,7 @@ public partial class DictionaryEditorWindow : Window
 
         int end = Math.Max(selectionStart, selectionEnd);
 
-        string selectedText = currentText.Substring(
-            start,
-            end - start
-        );
+        string selectedText = currentText[start..end];
 
         string normalText = RemoveFormattingMarkers(selectedText);
 
