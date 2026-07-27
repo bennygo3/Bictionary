@@ -50,11 +50,41 @@
                 Text="Definition"
             />
 
+            <StackPanel
+                Orientation="Horizontal"
+                Spacing="8">
+            
+                <Button
+                    Content="B"
+                    FontWeight="Bold"
+                    Click="BoldButton_Click"
+                    Focusable="False"
+                    Width="45"
+                />
+
+                <Button
+                    Content="I"
+                    FontStyle="Italic"
+                    Click="ItalicButton_Click"
+                    Focusable="False"
+                    Width="45"
+                />
+
+                <Button
+                    Content="Normal"
+                    Click="NormalButton_Click"
+                    Focusable="False"
+                    Width="80"
+                />
+
+            </StackPanel>
+
             <TextBox
                 x:Name="DefinitionInput"
                 PlaceholderText="Enter the word's definition:"
                 AcceptsReturn="True"
                 TextWrapping="Wrap"
+                GotFocus="FormattingInput_GotFocus"
                 MinHeight="120"
             />
 
@@ -63,11 +93,41 @@
                 Text="Example (optional)"
             />
 
+             <StackPanel
+                Orientation="Horizontal"
+                Spacing="8">
+            
+                <Button
+                    Content="B"
+                    FontWeight="Bold"
+                    Click="BoldButton_Click"
+                    Focusable="False"
+                    Width="45"
+                />
+
+                <Button
+                    Content="I"
+                    FontStyle="Italic"
+                    Click="ItalicButton_Click"
+                    Focusable="False"
+                    Width="45"
+                />
+
+                <Button
+                    Content="Normal"
+                    Click="NormalButton_Click"
+                    Focusable="False"
+                    Width="80"
+                />
+
+            </StackPanel>
+
             <TextBox
                 x:Name="ExampleInput"
                 PlaceholderText="Enter an example sentence..."
                 AcceptsReturn="True"
                 TextWrapping="Wrap"
+                GotFocus="FormattingInput_GotFocus"
                 MinHeight="80"
             />
 

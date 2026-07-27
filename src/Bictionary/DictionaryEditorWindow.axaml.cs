@@ -16,6 +16,8 @@ public partial class DictionaryEditorWindow : Window
 
     private Word? wordBeingEdited;
 
+    private TextBox? activeFormattingInput;
+
     public DictionaryEditorWindow()
     {
         InitializeComponent();
@@ -215,6 +217,14 @@ public partial class DictionaryEditorWindow : Window
         EditorStatusTextBlock.Text = $"Editing entry #{word.Id}: {word.Text}";
     }
 
+    private void FormattingInput_GotFocus(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (sender is TextBox textBox)
+        {
+            activeFormattingInput = textBox;
+        }
+    }
+
     private void CancelEditButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         ClearEntryForm();
@@ -236,4 +246,99 @@ public partial class DictionaryEditorWindow : Window
 
         RecentWordsListBox.SelectedIndex = -1;
     }
+
+    private void BoldButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        ApplyFormatting("**", "**");
+    }
+
+    private void ItalicButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        ApplyFormatting("*", "*");
+    }
+
+    private void NormalButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        RemoveFormatting();
+    }
+
+    private void ApplyFormatting(string openingMarker, string closingMarker)
+    {
+        if (activeFormattingInput is null)
+        {
+            EditorStatusTextBlock.Text = "Click inisde the definition or example to edit.";
+
+            return;
+        }
+
+        string currentText = activeFormattingInput.Text ?? "";
+
+        int selectionStart = activeFormattingInput.SelectionStart;
+
+        int selectionEnd = activeFormattingInput.SelectionEnd;
+
+        int start = Math.Min(selectionStart, selectionEnd);
+
+        int end = Math.Max(selectionStart, selectionEnd);
+
+        string selectedText = currentText.Substring(
+            start,
+            end - start
+        );
+
+        string formattedText = openingMarker + selectedText + closingMarker;
+
+        activeFormattingInput.Text = currentText[..start] + formattedText + currentText[end..];
+
+        activeFormattingInput.SelectionStart = start + openingMarker.Length;
+
+        activeFormattingInput.SelectionEnd = start + openingMarker.Length + selectedText.Length;
+
+        activeFormattingInput.Focus();
+    }
+
+    private void RemoveFormatting()
+    {
+        if (activeFormattingInput is null)
+        {
+            EditorStatusTextBlock.Text = "Click inisde the definition or example to edit.";
+
+            return;
+        }
+
+        string currentText = activeFormattingInput.Text ?? "";
+
+        int selectionStart = activeFormattingInput.SelectionStart;
+
+        int selectionEnd = activeFormattingInput.SelectionEnd;
+
+        int start = Math.Min(selectionStart, selectionEnd);
+
+        int end = Math.Max(selectionStart, selectionEnd);
+
+        string selectedText = currentText.Substring(
+            start,
+            end - start
+        );
+
+        string normalText = RemoveFormattingMarkers(selectedText);
+
+        activeFormattingInput.Text = currentText[..start] + normalText + currentText[end..];
+
+        activeFormattingInput.SelectionStart = start;
+
+        activeFormattingInput.SelectionEnd = start + normalText.Length;
+
+        activeFormattingInput.Focus();
+    }
+
+    private static string RemoveFormattingMarkers(string text)
+    {
+        string normalText = text.Replace("**", "");
+
+        normalText = normalText.Replace("*", "");
+
+        return normalText;
+    }
 }
+
