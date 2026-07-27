@@ -25,7 +25,7 @@ public partial class DictionaryEditorWindow : Window
         WordInput.Focus();
     }
 
-    private async void SaveWordButton_Click(object? sender, EventArgs e)
+    private async void SaveWordButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         string wordText = WordInput.Text?.Trim() ?? "";
         string partOfSpeech = PartOfSpeechInput.Text?.Trim() ?? "";
